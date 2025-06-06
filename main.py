@@ -12,3 +12,4 @@ def say(text):
 if __name__ == '__main__':
     print('PyCharm')
     say("Hello, I am Xebec")
+    say("I've been awakened")
