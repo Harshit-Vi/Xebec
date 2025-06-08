@@ -1,3 +1,5 @@
+import site
+
 import language
 import speech_recognition as sr
 import os
@@ -31,8 +33,11 @@ if __name__ == '__main__':
     while True:
         print("Listening.....")
         query = takeCommand()
-        if "Open Instagram".lower() in query.lower():
-            say("Okay")
-            webbrowser.open("https://www.instagram.com")
-            break # to prevent infinite looping
+        sites = [["youtube","https://www.youtube.com"], ["instagram","https://www.instagram.com"],
+                 ["google","https://www.google.com"],["Chat Gpt","https://www.chatgpt.com"]]
+        for site in sites:
+            if f"Open {site[0]}".lower() in query.lower():
+                say(f"Opening {site[0]}...")
+                webbrowser.open(site[1])
+                break # to prevent infinite looping
         #say(query)
