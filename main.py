@@ -31,8 +31,8 @@ if __name__ == '__main__':
     while True:
         print("Listening.....")
         query = takeCommand()
-        if "Open YouTube " in query.lower():
-            say(" Oh Geez Nigga nei nigga nigga nigga nei Nigga Can't You like Wait I am opening it")
-            webbrowser.open("https://youtube.com")
+        if "Open Instagram".lower() in query.lower():
+            say("Okay")
+            webbrowser.open("https://www.instagram.com")
             break # to prevent infinite looping
-        say(query)
+        #say(query)
