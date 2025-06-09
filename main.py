@@ -91,5 +91,5 @@ while True:
 
     elif "stop" in command:
         say("Going offline...")
-        sys.exit()
+        sys.exit
     #query
