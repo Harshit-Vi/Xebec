@@ -21,7 +21,7 @@ def say(text):
 def takeCommand(): # to take voice command
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        #r.pause_threshold = 1 # To check the audio quality fir machine to recognize
+        #r.pause_threshold = 1 # To check the audio quality for machine to recognize
         audio = r.listen(source) #listens the audio
 
         try: #Try catch to avoid errors
@@ -42,10 +42,18 @@ if __name__ == '__main__':
         query = takeCommand()
 
 
-        # To stop all operation and exit terminal
+# To start and stop all operation and exit terminal
+def run_Xebec():
+    while True:
+        query = takeCommand()
+
         if "stop" in query.lower():
             say("Shutting down...")
-            sys.exit()  # Terminates program immediately
+            break # exits the loop
+
+        elif "start" in query.lower():
+            say("System coming online...")
+            return # exit function and restart main loop
 
         sites = [["youtube","https://www.youtube.com"],
                  ["instagram","https://www.instagram.com"],
@@ -74,4 +82,14 @@ if __name__ == '__main__':
             strfTime = datetime.datetime.now().strftime('%I:%M %p')
             say(f"the time is {strfTime}")
 
+# Start xebec again when asked
+while True:
+    command= takeCommand()
+
+    if "start" in command:
+        run_Xebec()
+
+    elif "stop" in command:
+        say("Going offline...")
+        sys.exit()
     #query
