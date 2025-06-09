@@ -1,6 +1,5 @@
 import site
 import sys
-
 import language
 import speech_recognition as sr
 import os
@@ -8,7 +7,8 @@ import webbrowser
 import pyttsx3   #Text-to-speech library
 import wikipedia
 import openai
-import subprocess, sys
+import subprocess, sys # used for external command and managing paths
+import datetime # For date time query
 
 
 # Initialize text-to-speech engine
@@ -69,4 +69,9 @@ if __name__ == '__main__':
             #Use Windows-specific file opener
             if sys.platform == "win32":
                 os.startfile(musicPath)  # Correct way to open files on Windows
+        # to ask time
+        if "the time" in query.lower():
+            strfTime = datetime.datetime.now().strftime('%I:%M %p')
+            say(f"the time is {strfTime}")
+
     #query
