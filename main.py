@@ -68,5 +68,6 @@ while True:
     if status == "stop":
         say("Going offline...")
         break # exits the main loop
+        
 
 
