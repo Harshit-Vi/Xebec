@@ -36,6 +36,7 @@ def run_Xebec():
             say("Shutting down...")
             return "stop"  # Signal to stop the assistant
 
+        # todo: add feature to play specific song
         elif "play music" in query:
             say("Playing your music now!")
             musicPath = r"C:\Users\Harshit Singh\Downloads\CHOOT VOL. 1 - Yo Yo Honey Singh Ft. Badshah (Official Music Video) - Mafia Mundeer.mp3"
@@ -45,6 +46,7 @@ def run_Xebec():
             strfTime = datetime.datetime.now().strftime('%I:%M %p')
             say(f"The time is {strfTime}")
 
+        # todo: add more sites.
         elif "open" in query:
             sites = {
                 "youtube": "https://www.youtube.com",
