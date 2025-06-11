@@ -10,7 +10,8 @@ import openai
 engine = pyttsx3.init()
 
 #OpenAI API Key
-open.api_key = os.getenv("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")
+openai.api_key = os.getenv("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")
+openai.api_key = "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"
 
 def say(text):
     engine.say(text)
@@ -30,16 +31,20 @@ def takeCommand():
             print("Error recognizing voice:", e)  # Debugging error print statement
             return ""
 
-def ask_chatgpy(prompt):
+def ask_me(prompt):
     try:
-        response = openai.Completion.create(
-            model="gpt-3.5-turbo",
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-instruct",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=200,
             temperature=0.7
-    )
-    answer = response['choices'][0]['message']['content']
-    
+        )
+        answer = response['choices'][0]['message']['content']
+        return answer.strip()
+    except Exception as e:
+        return f"ChatGPT error: {e}"
+
+
 
 def run_Xebec():
     say("Hello, I am Xebec")
@@ -79,10 +84,14 @@ def run_Xebec():
                     webbrowser.open(sites[site])
                     break
 
+        elif any(x in query for x in ["who is ","what is","tell me about","define","define","ask me"]):
+            answer = ask_me(query)
+            print("ChatGpt:",answer)
+            say(answer)
+
 # **Main Loop to stop Assistant When Needed**
 while True:
     status = run_Xebec()
-
     if status == "stop":
         say("Going offline...")
         break # exits the main loop
