@@ -1,23 +1,31 @@
-import os
 import openai
-from config import apikey
-print(apikey)
-exit()
-openai.api_key = apikey
+import os
+openai.api_key = os.getenv("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")
 
-# Make sure your OpenAI API key is set in the environment variables
-openai.api_key = os.getenv("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")
+def ask_chatgpt(question):
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": question}],
+            max_tokens=200,
+            temperature=0.7
+        )
+        answer = response['choices'][0]['message']['content']
+        return answer.strip()
+    except Exception as e:
+        return f"Error: {e}"
+openai.api_key = os.getenv("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")
 
-response = openai.ChatCompletion.create(
-  model="gpt-4",  # or "gpt-3.5-turbo"
-  messages=[
-    {"role": "user", "content": "write a letter for resignation to boss"}
-  ],
-  temperature=0.7,
-  max_tokens=256,
-  top_p=1,
-  frequency_penalty=0,
-  presence_penalty=0
-)
+def ask_chatgpt(question):
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": question}],
+            max_tokens=200,
+            temperature=0.7
+        )
+        answer = response['choices'][0]['message']['content']
+        return answer.strip()
+    except Exception as e:
+        return f"Error: {e}"
 
-print(response['choices'][0]['message']['content'])

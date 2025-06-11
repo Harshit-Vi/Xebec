@@ -4,8 +4,13 @@ import pyttsx3                    # Text-to-speech conversion for voice output
 import datetime                   # Handles date and time functions
 import webbrowser                 # Allows opening web pages in a browser
 import os                         # Facilitates interaction with the operating system
+import openai
 
+# text-to-speech engine
 engine = pyttsx3.init()
+
+#OpenAI API Key
+open.api_key = os.getenv("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")
 
 def say(text):
     engine.say(text)
@@ -24,6 +29,17 @@ def takeCommand():
         except Exception as e:
             print("Error recognizing voice:", e)  # Debugging error print statement
             return ""
+
+def ask_chatgpy(prompt):
+    try:
+        response = openai.Completion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=200,
+            temperature=0.7
+    )
+    answer = response['choices'][0]['message']['content']
+    
 
 def run_Xebec():
     say("Hello, I am Xebec")
