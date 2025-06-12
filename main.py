@@ -4,14 +4,14 @@ import pyttsx3                    # Text-to-speech conversion for voice output
 import datetime                   # Handles date and time functions
 import webbrowser                 # Allows opening web pages in a browser
 import os                         # Facilitates interaction with the operating system
-import requests
+from together import Together     # Official Together SDK
 
 # text-to-speech engine
 engine = pyttsx3.init()
 
-#OpenAI API Key
-together_api_key = "sk-4d8938d9b3922e0eb7bcf3e46cc0328cb40f58c7cfca46f0aa842a8f6ce86ba4"
-
+# Initialize Together client (direct key or from environment)
+together_api_key = "sk-tgp_v1_RSVq1hWYbQbyGMussZ57xgLB5yZ_ArpuaHW-TnG36Hk"
+client = Together(api_key=together_api_key)
 
 def say(text):
     engine.say(text)
@@ -25,37 +25,25 @@ def takeCommand():
 
         try:
             query = r.recognize_google(audio, language="en-in")
-            print(f"User said: {query}")  # Debugging print statement
+            print(f"User said: {query}")
             return query.lower()
         except Exception as e:
-            print("Error recognizing voice:", e)  # Debugging error print statement
+            print("Error recognizing voice:", e)
             return ""
 
 def ask_me(prompt):
-    url = "https://api.together.xyz/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {together_api_key}",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",  # You can change to other supported models
-        "messages": [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ],
-        "max_tokens": 200,
-        "temperature": 0.7
-    }
-
     try:
-        response = requests.post(url, headers=headers, json=data)
-        response.raise_for_status()
-        result = response.json()
-        return result['choices'][0]['message']['content'].strip()
+        response = client.chat.completions.create(
+            model="deepseek-ai/DeepSeek-V3",  # Or use any other Together-supported model
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=200,
+            temperature=0.7
+        )
+        return response.choices[0].message.content.strip()
     except Exception as e:
-        return f"Together API error: {e}"
-
-
+        return f"Together SDK error: {e}"
 
 def run_Xebec():
     say("Hello, I am Xebec")
@@ -66,9 +54,8 @@ def run_Xebec():
 
         if "stop" in query:
             say("Shutting down...")
-            return "stop"  # Signal to stop the assistant
+            return "stop"
 
-        # todo: add feature to play specific song
         elif "play music" in query:
             say("Playing your music now!")
             musicPath = r"C:\Users\Harshit Singh\Downloads\CHOOT VOL. 1 - Yo Yo Honey Singh Ft. Badshah (Official Music Video) - Mafia Mundeer.mp3"
@@ -78,7 +65,6 @@ def run_Xebec():
             strfTime = datetime.datetime.now().strftime('%I:%M %p')
             say(f"The time is {strfTime}")
 
-        # todo: add more sites.
         elif "open" in query:
             sites = {
                 "youtube": "https://www.youtube.com",
@@ -95,17 +81,15 @@ def run_Xebec():
                     webbrowser.open(sites[site])
                     break
 
-        elif any(x in query for x in ["who is ","what is","tell me about","define","define","ask me"]):
+        elif any(x in query for x in ["who is ", "what is", "tell me about", "define", "ask me"]):
             answer = ask_me(query)
-            print("ChatGpt:",answer)
+            print("ChatGpt:", answer)
             say(answer)
 
-# **Main Loop to stop Assistant When Needed**
+# Main loop to run Xebec
 while True:
     status = run_Xebec()
     if status == "stop":
         say("Going offline...")
-        break # exits the main loop
+        break
         
-
-
