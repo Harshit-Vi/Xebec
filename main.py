@@ -4,14 +4,14 @@ import pyttsx3                    # Text-to-speech conversion for voice output
 import datetime                   # Handles date and time functions
 import webbrowser                 # Allows opening web pages in a browser
 import os                         # Facilitates interaction with the operating system
-import openai
+import requests
 
 # text-to-speech engine
 engine = pyttsx3.init()
 
 #OpenAI API Key
-openai.api_key = os.getenv("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")
-openai.api_key = "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"
+together_api_key = "sk-4d8938d9b3922e0eb7bcf3e46cc0328cb40f58c7cfca46f0aa842a8f6ce86ba4"
+
 
 def say(text):
     engine.say(text)
@@ -32,17 +32,28 @@ def takeCommand():
             return ""
 
 def ask_me(prompt):
+    url = "https://api.together.xyz/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {together_api_key}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",  # You can change to other supported models
+        "messages": [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": 200,
+        "temperature": 0.7
+    }
+
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-instruct",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=200,
-            temperature=0.7
-        )
-        answer = response['choices'][0]['message']['content']
-        return answer.strip()
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        result = response.json()
+        return result['choices'][0]['message']['content'].strip()
     except Exception as e:
-        return f"ChatGPT error: {e}"
+        return f"Together API error: {e}"
 
 
 
