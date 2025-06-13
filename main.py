@@ -10,7 +10,7 @@ from together import Together     # Official Together SDK
 engine = pyttsx3.init()
 
 # Initialize Together client (direct key or from environment)
-together_api_key = "sk-tgp_v1_RSVq1hWYbQbyGMussZ57xgLB5yZ_ArpuaHW-TnG36Hk"
+together_api_key = "tgp_v1_RSVq1hWYbQbyGMussZ57xgLB5yZ_ArpuaHW-TnG36Hk"
 client = Together(api_key=together_api_key)
 
 def say(text):
@@ -92,4 +92,4 @@ while True:
     if status == "stop":
         say("Going offline...")
         break
-        
+
