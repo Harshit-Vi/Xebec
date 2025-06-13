@@ -81,7 +81,7 @@ def run_Xebec():
                     webbrowser.open(sites[site])
                     break
 
-        elif any(x in query for x in ["who is ", "what is", "tell me about", "define", "ask me"]):
+        elif any(x in query for x in ["who is ", "has", "what is", "tell me about", "define", "ask me"]):
             answer = ask_me(query)
             print("ChatGpt:", answer)
             say(answer)
