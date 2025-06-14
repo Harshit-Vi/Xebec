@@ -37,11 +37,22 @@ def takeCommand():
 def number_guessing_game():
     say("Let's play a number guessing game. I am thinking of a number between 1 and 20.")
     number = random.randint(1, 20)
-    for i in range (5)
+    for i in range (5):
         say("Take a guess.")
         guess = takeCommand()
         if guess.isdigit():
             guess = int(guess)
+            if guess < number:
+                say("Your guess is too low.")
+            elif guess > number:
+                say("Your guess is too high.")
+            else:
+                say("Congratulations, you guessed the number!")
+                return
+        else:
+            say("please say a number.")
+            say(f"Sorry! The number I was thinking of was {number}.Better luck next time.")
+
 
 def ask_me(prompt):
     try:
