@@ -35,7 +35,7 @@ def takeCommand():
             return ""
 
 def number_guessing_game():
-    say("Let's play a number guessing game. I am thinking of a number between 1 and 20.")
+    say("let's play a number guessing game.")
     number = random.randint(1, 20)
     for i in range (5):
         say("Take a guess.")
@@ -51,7 +51,8 @@ def number_guessing_game():
                 return
         else:
             say("please say a number.")
-            say(f"Sorry! The number I was thinking of was {number}.Better luck next time.")
+
+    say(f"Sorry! The number I was thinking of was {number}.Better luck next time.")
 
 
 def ask_me(prompt):
@@ -103,6 +104,14 @@ def run_Xebec():
                     say(f"Opening {site}...")
                     webbrowser.open(sites[site])
                     break
+
+        elif "play game" in query:
+            say("Which game would you like to play? You can say Number Guessing.")
+            game_choice = takeCommand()
+            if "number" in game_choice or "guess" in game_choice:
+                number_guessing_game()
+            else:
+                say("Sorry, I only know the number guessing game for now.")
 
         elif any(x in query for x in ["who is ", "has", "what is", "tell me about", "define", "ask me"]):
             answer = ask_me(query)
