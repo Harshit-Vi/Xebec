@@ -5,6 +5,9 @@ import datetime                   # Handles date and time functions
 import webbrowser                 # Allows opening web pages in a browser
 import os                         # Facilitates interaction with the operating system
 from together import Together     # Official Together SDK
+import random                     # for random number
+
+
 
 # text-to-speech engine
 engine = pyttsx3.init()
@@ -30,6 +33,15 @@ def takeCommand():
         except Exception as e:
             print("Error recognizing voice:", e)
             return ""
+
+def number_guessing_game():
+    say("Let's play a number guessing game. I am thinking of a number between 1 and 20.")
+    number = random.randint(1, 20)
+    for i in range (5)
+        say("Take a guess.")
+        guess = takeCommand()
+        if guess.isdigit():
+            guess = int(guess)
 
 def ask_me(prompt):
     try:
