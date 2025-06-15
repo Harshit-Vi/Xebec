@@ -52,6 +52,10 @@ def create_word_doc_from_topic(topic):
 
         say(f"Word file created as {filename}")
         print(f"Saved as: {filename}")
+    except Exception as e:
+        say("Sorry, I couldn't create the document.")
+        print(f"Error creating Word document: {e}")
+
 #---number guessing game---
 def number_guessing_game():
     say("let's play a number guessing game.")
