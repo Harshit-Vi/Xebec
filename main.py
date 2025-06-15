@@ -5,7 +5,8 @@ import datetime                   # Handles date and time functions
 import webbrowser                 # Allows opening web pages in a browser
 import os                         # Facilitates interaction with the operating system
 from together import Together     # Official Together SDK
-import random                     # for random number
+import time
+import random # for random number
 
 
 
@@ -53,6 +54,61 @@ def number_guessing_game():
             say("please say a number.")
 
     say(f"Sorry! The number I was thinking of was {number}.Better luck next time.")
+
+    import random
+    import time
+
+    truths = [
+        "What is your biggest fear?",
+        "What's a secret you've never told anyone?",
+        "Have you ever lied to your best friend?",
+        "What's the most embarrassing thing you've done?",
+        "Who was your first crush?"
+    ]
+
+    dares = [
+        "Do 10 pushups right now.",
+        "Sing the chorus of your favorite song.",
+        "Dance like a chicken for 15 seconds.",
+        "Text someone 'I like you' and screenshot the response.",
+        "Do an impression of your favorite actor."
+    ]
+
+    def get_players():
+        players = []
+        print("Enter player names (type 'done' when finished):")
+        while True:
+            name = input("Player name: ").strip()
+            if name.lower() == 'done':
+                break
+            elif name:
+                players.append(name)
+        return players
+
+    def play_game(players):
+        print("\n🎉 Starting Truth or Dare! 🎉\n")
+        while True:
+            player = random.choice(players)
+            print(f"\n👉 It's {player}'s turn!")
+            choice = input("Type 'truth', 'dare', or 'quit' to end: ").strip().lower()
+
+            if choice == 'truth':
+                print("🧠 Truth:", random.choice(truths))
+            elif choice == 'dare':
+                print("🎯 Dare:", random.choice(dares))
+            elif choice == 'quit':
+                print("Thanks for playing!")
+                break
+            else:
+                print("Invalid input. Please type 'truth', 'dare', or 'quit'.")
+            time.sleep(1.5)
+
+    if __name__ == "__main__":
+        players = get_players()
+        if players:
+            play_game(players)
+        else:
+            print("No players entered. Exiting game.")
 
 
 def ask_me(prompt):
