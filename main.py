@@ -41,7 +41,10 @@ def takeCommand():
 def create_word_doc_from_topic(topic):
     say(f"Generating word document for {topic}")
     content = ask_me(f"Write a detailed article about {topic}")
-    
+
+    try:
+        doc =Document()
+        doc.add_heading(f"Topic: {topic}", 0)
 #---number guessing game---
 def number_guessing_game():
     say("let's play a number guessing game.")
