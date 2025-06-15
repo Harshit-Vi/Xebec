@@ -45,6 +45,12 @@ def create_word_doc_from_topic(topic):
     try:
         doc =Document()
         doc.add_heading(f"Topic: {topic}", 0)
+        doc.add_paragraph(content)
+
+        filename = f"{topic.replace(' ', '_')}.docx"
+        doc.save(filename)
+
+        say
 #---number guessing game---
 def number_guessing_game():
     say("let's play a number guessing game.")
