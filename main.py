@@ -8,6 +8,7 @@ import os                         # Facilitates interaction with the operating s
 from together import Together     # Official Together SDK
 import time                       # Obviously for time lol
 import random                     # For random number
+import re                         # For removing char that are illegal in a file name 
 
 
 
@@ -46,6 +47,10 @@ def create_word_doc_from_topic(topic):
         doc =Document()
         doc.add_heading(f"Topic: {topic}", 0)
         doc.add_paragraph(content)
+
+        # ✅ Clean the topic string to make a safe filename
+        safe_topic = re.sub(r'[\\/*?:"<>|]', "_", topic)
+        filename = f"{safe_topic.replace(' ', '_')}.docx"
 
         filename = f"{topic.replace(' ', '_')}.docx"
         doc.save(filename)
@@ -131,7 +136,7 @@ def ask_me(prompt):
             messages=[
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=200,
+            max_tokens=1024,
             temperature=0.7
         )
         return response.choices[0].message.content.strip()
