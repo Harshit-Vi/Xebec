@@ -50,7 +50,8 @@ def create_word_doc_from_topic(topic):
         filename = f"{topic.replace(' ', '_')}.docx"
         doc.save(filename)
 
-        say
+        say(f"Word file created as {filename}")
+        print(f"Saved as: {filename}")
 #---number guessing game---
 def number_guessing_game():
     say("let's play a number guessing game.")
