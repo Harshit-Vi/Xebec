@@ -138,7 +138,7 @@ def ask_me(prompt):
     except Exception as e:
         return f"Together SDK error: {e}"
 
-#Initialisation of assistant & shutting down
+#Initialisation of Xebec & shutting down
 def run_Xebec():
     say("Hello, I am Xebec")
     say("I've been awakened")
@@ -155,6 +155,15 @@ def run_Xebec():
             say("Playing your music now!")
             musicPath = r"C:\Users\Harshit Singh\Downloads\CHOOT VOL. 1 - Yo Yo Honey Singh Ft. Badshah (Official Music Video) - Mafia Mundeer.mp3"
             os.startfile(musicPath)
+
+# For creation of word documents.
+        elif "create document" in query or "write article" in query:
+            say("What topic should i write about?")
+            topic = takeCommand()
+            if topic:
+                create_word_doc_from_topic(topic)
+            else:
+                say("I didn't catch the topic. Please try again.")
 
 # For Time
         elif "the time" in query:
