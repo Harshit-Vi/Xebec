@@ -1,3 +1,4 @@
+from docx import Document         # For creation of documents
 import sys                        # Provides access to system-specific parameters and functions
 import speech_recognition as sr   # Enables speech recognition functionality
 import pyttsx3                    # Text-to-speech conversion for voice output
@@ -5,8 +6,8 @@ import datetime                   # Handles date and time functions
 import webbrowser                 # Allows opening web pages in a browser
 import os                         # Facilitates interaction with the operating system
 from together import Together     # Official Together SDK
-import time
-import random # for random number
+import time                       # Obviously for time lol
+import random                     # For random number
 
 
 
@@ -36,6 +37,11 @@ def takeCommand():
             print("Error recognizing voice:", e)
             return ""
 
+# For creation of documents.
+def create_word_doc_from_topic(topic):
+    say(f"Generating word document for {topic}")
+    content = ask_me(f"Write a detailed article about {topic}")
+    
 #---number guessing game---
 def number_guessing_game():
     say("let's play a number guessing game.")
