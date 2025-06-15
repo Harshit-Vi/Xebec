@@ -17,6 +17,7 @@ engine = pyttsx3.init()
 together_api_key = "tgp_v1_RSVq1hWYbQbyGMussZ57xgLB5yZ_ArpuaHW-TnG36Hk"
 client = Together(api_key=together_api_key)
 
+# voice recognition , Interpretation & voice to text .
 def say(text):
     engine.say(text)
     engine.runAndWait()
@@ -35,6 +36,7 @@ def takeCommand():
             print("Error recognizing voice:", e)
             return ""
 
+#---number guessing game---
 def number_guessing_game():
     say("let's play a number guessing game.")
     number = random.randint(1, 20)
@@ -56,9 +58,52 @@ def number_guessing_game():
     say(f"Sorry! The number I was thinking of was {number}.Better luck next time.")
 
 #--- Truth or Dare Game---
+truths = [
+    "What is your biggest fear?",
+    "What's a secret you've never told anyone?",
+    "Have you ever lied to your best friend?",
+    "What's the most embarrassing thing you've done?",
+    "Who was your first crush?"
+]
 
+dares = [
+    "Do 10 pushups right now.",
+    "Sing the chorus of your favorite song.",
+    "Dance like a chicken for 15 seconds.",
+    "Text someone 'I like you' and screenshot the response.",
+    "Do an impression of your favorite actor."
+]
 
+def get_players():
+    players = []
+    print("Enter player names (type 'done' when finished):")
+    while True:
+        name = input("Player name: ").strip()
+        if name.lower() == 'done':
+            break
+        elif name:
+            players.append(name)
+    return players
 
+def play_game(players):
+    print("\n🎉 Starting Truth or Dare! 🎉\n")
+    while True:
+        player = random.choice(players)
+        print(f"\n👉 It's {player}'s turn!")
+        choice = input("Type 'truth', 'dare', or 'quit' to end: ").strip().lower()
+
+        if choice == 'truth':
+            print("🧠 Truth:", random.choice(truths))
+        elif choice == 'dare':
+            print("🎯 Dare:", random.choice(dares))
+        elif choice == 'quit':
+            print("Thanks for playing!")
+            break
+        else:
+            print("Invalid input. Please type 'truth', 'dare', or 'quit'.")
+        time.sleep(1.5)
+
+#For AI connectivity
 def ask_me(prompt):
     try:
         response = client.chat.completions.create(
@@ -73,6 +118,7 @@ def ask_me(prompt):
     except Exception as e:
         return f"Together SDK error: {e}"
 
+#Initialisation of assistant & shutting down
 def run_Xebec():
     say("Hello, I am Xebec")
     say("I've been awakened")
@@ -84,15 +130,18 @@ def run_Xebec():
             say("Shutting down...")
             return "stop"
 
+# For music playing todo:add program to play selected music from downloads
         elif "play music" in query:
             say("Playing your music now!")
             musicPath = r"C:\Users\Harshit Singh\Downloads\CHOOT VOL. 1 - Yo Yo Honey Singh Ft. Badshah (Official Music Video) - Mafia Mundeer.mp3"
             os.startfile(musicPath)
 
+# For Time
         elif "the time" in query:
             strfTime = datetime.datetime.now().strftime('%I:%M %p')
             say(f"The time is {strfTime}")
 
+#For opening sites todo: add more sites
         elif "open" in query:
             sites = {
                 "youtube": "https://www.youtube.com",
@@ -109,6 +158,16 @@ def run_Xebec():
                     webbrowser.open(sites[site])
                     break
 
+#To Start & Triger Truth and dare
+        elif "truth or dare" in query:
+            say("Starting Truth or Dare game.")
+            players = get_players()
+            if players:
+                play_game(players)
+            else:
+                say("No players entered. Exiting game.")
+
+#For selection of games
         elif "play game" in query:
             say("Which game would you like to play? You can say Number Guessing.")
             game_choice = takeCommand()
