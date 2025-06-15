@@ -55,33 +55,31 @@ def number_guessing_game():
 
     say(f"Sorry! The number I was thinking of was {number}.Better luck next time.")
 
-    import random
-    import time
+#--- Truth or Dare Game---
+truths = [
+    "What is your biggest fear?",
+    "What's a secret you've never told anyone?",
+    "Have you ever lied to your best friend?",
+    "What's the most embarrassing thing you've done?",
+    "Who was your first crush?"
+]
 
-    truths = [
-        "What is your biggest fear?",
-        "What's a secret you've never told anyone?",
-        "Have you ever lied to your best friend?",
-        "What's the most embarrassing thing you've done?",
-        "Who was your first crush?"
-    ]
+dares = [
+    "Do 10 pushups right now.",
+    "Sing the chorus of your favorite song.",
+    "Dance like a chicken for 15 seconds.",
+    "Text someone 'I like you' and screenshot the response.",
+    "Do an impression of your favorite actor."
+]
 
-    dares = [
-        "Do 10 pushups right now.",
-        "Sing the chorus of your favorite song.",
-        "Dance like a chicken for 15 seconds.",
-        "Text someone 'I like you' and screenshot the response.",
-        "Do an impression of your favorite actor."
-    ]
-
-    def get_players():
-        players = []
-        print("Enter player names (type 'done' when finished):")
-        while True:
-            name = input("Player name: ").strip()
-            if name.lower() == 'done':
-                break
-            elif name:
+def get_players():
+    players = []
+    print("Enter player names (type 'done' when finished):")
+    while True:
+        name = input("Player name: ").strip()
+        if name.lower() == 'done':
+            break
+        elif name:
                 players.append(name)
         return players
 
