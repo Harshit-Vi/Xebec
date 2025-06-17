@@ -9,6 +9,9 @@ from together import Together     # Official Together SDK
 import time                       # Obviously for time lol
 import random                     # For random number
 import re                         # For removing char that are illegal in a file name
+import subprocess                 # Create and manage subprocesses
+import platform                   #Selects item from a platform
+
 
 
 # text-to-speech engine
