@@ -8,8 +8,7 @@ import os                         # Facilitates interaction with the operating s
 from together import Together     # Official Together SDK
 import time                       # Obviously for time lol
 import random                     # For random number
-import re                         # For removing char that are illegal in a file name 
-
+import re                         # For removing char that are illegal in a file name
 
 
 # text-to-speech engine
@@ -183,7 +182,10 @@ def run_Xebec():
                 "facebook": "https://www.facebook.com",
                 "google": "https://www.google.com",
                 "chat gpt": "https://www.chatgpt.com",
-                "spotify": "https://www.spotify.com"
+                "spotify": "https://www.spotify.com",
+                "github": "https://www.github.com",
+                "deepseek": "https://www.deepseek.com",
+
             }
 
             for site in sites:
