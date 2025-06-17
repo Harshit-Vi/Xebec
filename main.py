@@ -186,7 +186,7 @@ def run_Xebec():
                 "github": "https://www.github.com",
                 "deepseek": "https://www.deepseek.com",
                 "canva": "https://www.canva.com",
-
+                "whatsapp": "https://www.whatsapp.com",
             }
 
             for site in sites:
