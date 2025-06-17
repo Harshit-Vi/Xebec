@@ -185,6 +185,7 @@ def run_Xebec():
                 "spotify": "https://www.spotify.com",
                 "github": "https://www.github.com",
                 "deepseek": "https://www.deepseek.com",
+                "canva": "https://www.canva.com",
 
             }
 
