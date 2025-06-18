@@ -170,7 +170,29 @@ def list_songs_in_downloads():
             os.startfile(song_path)
         elif sys.platform == 'darwin':
             subprocess.call(['open', song_path])
+        else: (#for linux)
+            subprocess.call(['xdg-open', song_path])
 
+    def choose_and_play_song():
+            songs, downloads_path = list_songs_in_downloads()
+            if not songs:
+                say("Sorry, I couldn't find any songs.")
+                return
+
+            say ("Here are your songs:")
+            for idx, song in enumerate(songs):
+                print("f{idx+1}.{song}")
+                say("f{idx+1}.{song}")
+
+            try:
+                choice = int(speech_recognition("Choose a song:"))
+                if choice < len(songs):
+                    selected_song = os.path.join(downloads_path, songs[choice])
+                    play_song(selected_song)
+                else:
+                    say("Invalid choice.")
+            except ValueError:
+                say("Sorry, I couldn't find any songs.")
 
 # For creation of word documents.
         elif "create document" in query or "write article" in query:
