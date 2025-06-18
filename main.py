@@ -13,7 +13,6 @@ import subprocess                 # Create and manage subprocesses
 import platform                   #Selects item from a platform
 
 
-
 # text-to-speech engine
 engine = pyttsx3.init()
 
@@ -165,39 +164,40 @@ def list_songs_in_downloads():
     songs = [f for f in os.listdir(downloads_path) if f.endswith(audio_extensions)]
     return songs, downloads_path
 
-    def play_song(song_path):
-        if sys.platform == 'win32':
-            os.startfile(song_path)
-        elif sys.platform == 'darwin':
-            subprocess.call(['open', song_path])
-        else: (#for linux)
-            subprocess.call(['xdg-open', song_path])
+def play_song(song_path):
+    if sys.platform == 'win32':
+         os.startfile(song_path)
+    elif sys.platform == 'darwin':
+        subprocess.call(['open', song_path])
+    else: (#for linux)
+        subprocess.call(['xdg-open', song_path])
 
-        def choose_and_play_song():
-            songs, downloads_path = list_songs_in_downloads()
-            if not songs:
-                say("Sorry, I couldn't find any songs.")
-                return
+def choose_and_play_song():
+    songs, downloads_path = list_songs_in_downloads()
+    if not songs:
+        say("Sorry, I couldn't find any songs.")
+        return
 
-            say ("Here are your songs:")
-            for idx, song in enumerate(songs):
-                print(f"f{idx+1}. {song}")
-                say(f"{idx+1}. {song}")
+    say ("Here are your songs:")
+    for idx, song in enumerate(songs):
+        print(f"f{idx+1}. {song}")
+        say(f"{idx+1}. {song}")
 
-            try:
-                say("Please say the number of the song you want to play.")
-                choice_text = takeCommand()
-                if choice_text.isdigit():
-                    choice = int(choice_text)
-                    if 1 <= choice <= len(songs):
-                        play_song(selected_song)
-                    else:
-                        say("Invalid choice number.")
-                else:
-                    say("that was not a valid number.")
-            except Exception as e:
-                say("something went wrong while playing the song.")
-                print("error:", e)
+    try:
+        say("Please say the number of the song you want to play.")
+        choice_text = takeCommand()
+        if choice_text.isdigit():
+            choice = int(choice_text)
+            if 1 <= choice <= len(songs):
+                selected_song = os.path.join(downloads_path, songs[choice - 1])
+                 play_song(selected_song)
+            else:
+                say("Invalid choice number.")
+        else:
+            say("that was not a valid number.")
+    except Exception as e:
+        say("something went wrong while playing the song.")
+        print("error:", e)
 
 # For creation of word documents.
         elif "create document" in query or "write article" in query:
@@ -263,5 +263,3 @@ while True:
     if status == "stop":
         say("Going offline...")
         break
-    elif "play song" in query or "play music" in query:
-        choose_and_play_song()
