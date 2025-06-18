@@ -10,7 +10,8 @@ import time                       # Obviously for time lol
 import random                     # For random number
 import re                         # For removing char that are illegal in a file name
 import subprocess                 # Create and manage subprocesses
-import platform                   #Selects item from a platform
+import difflib                    # Used to match near accurate words ( example : luv for love)
+
 
 
 # text-to-speech engine
@@ -169,12 +170,12 @@ def choose_and_play_song():
     say ("Please say the name of the song that you want to play.")
     query = takeCommand().lower()
 
-#To find the matching song
-    matching_songs =[song  for song in songs if query in song.lower()]
+#To find the fuzzy matching song
+    close_matches = difflib.get_close_matches(query, songs, n=1, cutoff=0.5)
 
-    if matching_songs:
-        selected_song = os.path.join(downloads_path, matching_songs[0])
-        say(f"Playing {matching_songs[0]}")
+    if close_matches:
+        selected_song = os.path.join(downloads_path, close_matches[0])
+        say(f"Playing {close_matches[0]}")
         play_song(selected_song)
     else:
         say("I couldn't find a matching song. Here's your list of songs. please choose a number.")
