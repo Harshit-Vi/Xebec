@@ -38,6 +38,11 @@ def takeCommand():
         except Exception as e:
             print("Error recognizing voice:", e)
             return ""
+# To see the installed voices
+def list_available_voices():
+    voices = engine.getProperty('voices')
+    for voice in voices:
+        print(f"Name: {voice.name}, ID: {voice.id}, Gender: {voice.gender if hasattr(voice, 'gender') else 'unknown'}")
 
 # For Voice Change
 def set_voice_by_name(name: str):
@@ -227,6 +232,10 @@ def run_Xebec():
         elif "switch to" in query and "voice" in query:
             voice_name =query.replace("switch to", "").replace("voice", "").strip()
             if voice_name:
+                set_voice_by_name(voice_name)
+            else:
+                say("please say the name.")
+
 # For creation of word documents.
         elif "create document" in query or "write article" in query:
             say("What topic should i write about?")
