@@ -166,10 +166,21 @@ def choose_and_play_song():
         say("Sorry, I couldn't find any songs.")
         return
 
-    say ("Here are your songs:")
-    for idx, song in enumerate(songs):
-        print(f"f{idx+1}. {song}")
-        say(f"{idx+1}. {song}")
+    say ("Please say the name of the song that you want to play.")
+    query = takeCommand().lower()
+
+#To find the matching song
+    matching_songs =[song  for song in songs if query in song.lower()]
+
+    if matching_songs:
+        selected_song = os.path.join(downloads_path, matching_songs[0])
+        say(f"Playing {matching_songs[0]}")
+        play_song(selected_song)
+    else:
+        say("I couldn't find a matching song. Here's your list of songs. please choose a number.")
+        for idx, song in enumerate(songs):
+            print(f"f{idx+1}. {song}")
+            say(f"{idx+1}. {song}")
 
     try:
         say("Please say the number of the song you want to play.")
