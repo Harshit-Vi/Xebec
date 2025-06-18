@@ -144,18 +144,6 @@ def ask_me(prompt):
     except Exception as e:
         return f"Together SDK error: {e}"
 
-#Initialisation of Xebec & shutting down
-def run_Xebec():
-    say("Hello, I am Xebec")
-    say("I've been awakened")
-
-    while True:
-        query = takeCommand()
-
-        if "stop" in query:
-            say("Shutting down...")
-            return "stop"
-
 # For music playing todo:add program to play selected music from downloads
 
 def list_songs_in_downloads():
@@ -198,6 +186,21 @@ def choose_and_play_song():
     except Exception as e:
         say("something went wrong while playing the song.")
         print("error:", e)
+
+#Initialisation of Xebec & shutting down
+def run_Xebec():
+    say("Hello, I am Xebec")
+    say("I've been awakened")
+
+    while True:
+        query = takeCommand()
+
+        if "stop" in query:
+            say("Shutting down...")
+            return "stop"
+
+        elif "play song" in query or "play music" in query:
+            choose_and_play_song()
 
 # For creation of word documents.
         elif "create document" in query or "write article" in query:
