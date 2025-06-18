@@ -158,10 +158,19 @@ def run_Xebec():
             return "stop"
 
 # For music playing todo:add program to play selected music from downloads
-        elif "play music" in query:
-            say("Playing your music now!")
-            musicPath = r"C:\Users\Harshit Singh\Downloads\CHOOT VOL. 1 - Yo Yo Honey Singh Ft. Badshah (Official Music Video) - Mafia Mundeer.mp3"
-            os.startfile(musicPath)
+
+def list_songs_in_downloads():
+    downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
+    audio_extensions = ('.mp3', '.aac', '.ogg', '.m4a', 'wav')
+    songs = [f for f in os.listdir(download_path) if f.endswith(audio_extensions)]
+    return songs, downloads_path
+
+    def play_song(song_path):
+        if sys.platform == 'win32':
+            os.startfile(song_path)
+        elif sys.platform == 'darwin':
+            subprocess.call(['open', song_path])
+
 
 # For creation of word documents.
         elif "create document" in query or "write article" in query:
