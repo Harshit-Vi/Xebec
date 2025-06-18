@@ -157,8 +157,8 @@ def play_song(song_path):
          os.startfile(song_path)
     elif sys.platform == 'darwin':
         subprocess.call(['open', song_path])
-    else: (#for linux)
-        subprocess.call(['xdg-open', song_path])
+    else:  #For Linux
+        subprocess.call(["xdg-open", song_path])
 
 def choose_and_play_song():
     songs, downloads_path = list_songs_in_downloads()
@@ -178,7 +178,7 @@ def choose_and_play_song():
             choice = int(choice_text)
             if 1 <= choice <= len(songs):
                 selected_song = os.path.join(downloads_path, songs[choice - 1])
-                 play_song(selected_song)
+                play_song(selected_song)
             else:
                 say("Invalid choice number.")
         else:
