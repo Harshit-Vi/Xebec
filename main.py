@@ -48,11 +48,11 @@ def takeCommand():
 # For Voice Change
 def set_voice_by_name(name: str):
     name = name.lower()
-    voices=engine.setProperty('voices')
+    voices=engine.getProperty('voices')
     for voice in voices:
         if name in voice.name.lower():
             engine.setProperty('voice', voice.id)
-            say(f"Voice changed to {voice.name}")
+            say(f"Hi, I am {voice.name} here in your service.")
             return
     say("Sorry, I couldn't find that voice.")
 
