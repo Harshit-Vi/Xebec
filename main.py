@@ -13,7 +13,6 @@ import subprocess                 # Create and manage subprocesses
 import difflib                    # Used to match near accurate words ( example : luv for love)
 
 
-
 # text-to-speech engine
 engine = pyttsx3.init()
 
@@ -39,6 +38,17 @@ def takeCommand():
         except Exception as e:
             print("Error recognizing voice:", e)
             return ""
+
+# For Voice Change
+def set_voice_by_name(name: str):
+    engine.setProperty('voices')
+    name = name.lower()
+    for voices in voices:
+        if name in voice.name.lower():
+            engine.setProperty('voice', voice.id)
+            say(f"Voice changed to {voice.name}")
+            return
+    say("Sorry, I couldn't find that voice.")
 
 # For creation of documents.
 def create_word_doc_from_topic(topic):
@@ -214,6 +224,9 @@ def run_Xebec():
         elif "play song" in query or "play music" in query:
             choose_and_play_song()
 
+        elif "switch to" in query and "voice" in query:
+            voice_name =query.replace("switch to", "").replace("voice", "").strip()
+            if voice_name:
 # For creation of word documents.
         elif "create document" in query or "write article" in query:
             say("What topic should i write about?")
