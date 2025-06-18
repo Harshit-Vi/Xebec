@@ -162,7 +162,7 @@ def run_Xebec():
 def list_songs_in_downloads():
     downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
     audio_extensions = ('.mp3', '.aac', '.ogg', '.m4a', 'wav')
-    songs = [f for f in os.listdir(download_path) if f.endswith(audio_extensions)]
+    songs = [f for f in os.listdir(downloads_path) if f.endswith(audio_extensions)]
     return songs, downloads_path
 
     def play_song(song_path):
@@ -173,7 +173,7 @@ def list_songs_in_downloads():
         else: (#for linux)
             subprocess.call(['xdg-open', song_path])
 
-    def choose_and_play_song():
+        def choose_and_play_song():
             songs, downloads_path = list_songs_in_downloads()
             if not songs:
                 say("Sorry, I couldn't find any songs.")
@@ -181,18 +181,23 @@ def list_songs_in_downloads():
 
             say ("Here are your songs:")
             for idx, song in enumerate(songs):
-                print("f{idx+1}.{song}")
-                say("f{idx+1}.{song}")
+                print(f"f{idx+1}. {song}")
+                say(f"{idx+1}. {song}")
 
             try:
-                choice = int(speech_recognition("Choose a song:"))
-                if choice < len(songs):
-                    selected_song = os.path.join(downloads_path, songs[choice])
-                    play_song(selected_song)
+                say("Please say the number of the song you want to play.")
+                choice_text = takeCommand()
+                if choice_text.isdigit():
+                    choice = int(choice_text)
+                    if 1 <= choice <= len(songs):
+                        play_song(selected_song)
+                    else:
+                        say("Invalid choice number.")
                 else:
-                    say("Invalid choice.")
-            except ValueError:
-                say("Sorry, I couldn't find any songs.")
+                    say("that was not a valid number.")
+            except Exception as e:
+                say("something went wrong while playing the song.")
+                print("error:", e)
 
 # For creation of word documents.
         elif "create document" in query or "write article" in query:
@@ -258,4 +263,5 @@ while True:
     if status == "stop":
         say("Going offline...")
         break
-
+    elif "play song" in query or "play music" in query:
+        choose_and_play_song()
