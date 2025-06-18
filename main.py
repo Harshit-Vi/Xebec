@@ -16,6 +16,12 @@ import difflib                    # Used to match near accurate words ( example 
 # text-to-speech engine
 engine = pyttsx3.init()
 
+# To see the installed voices
+def list_available_voices():
+    voices = engine.getProperty('voices')
+    for voice in voices:
+        print(f"Name: {voice.name}, ID: {voice.id}, Gender: {voice.gender if hasattr(voice, 'gender') else 'unknown'}")
+
 # Initialize Together client (direct key or from environment)
 together_api_key = "tgp_v1_RSVq1hWYbQbyGMussZ57xgLB5yZ_ArpuaHW-TnG36Hk"
 client = Together(api_key=together_api_key)
@@ -38,17 +44,12 @@ def takeCommand():
         except Exception as e:
             print("Error recognizing voice:", e)
             return ""
-# To see the installed voices
-def list_available_voices():
-    voices = engine.getProperty('voices')
-    for voice in voices:
-        print(f"Name: {voice.name}, ID: {voice.id}, Gender: {voice.gender if hasattr(voice, 'gender') else 'unknown'}")
 
 # For Voice Change
 def set_voice_by_name(name: str):
-    engine.setProperty('voices')
     name = name.lower()
-    for voices in voices:
+    voices=engine.setProperty('voices')
+    for voice in voices:
         if name in voice.name.lower():
             engine.setProperty('voice', voice.id)
             say(f"Voice changed to {voice.name}")
@@ -300,3 +301,6 @@ while True:
     if status == "stop":
         say("Going offline...")
         break
+
+
+list_available_voices()
