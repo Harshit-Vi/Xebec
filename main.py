@@ -15,6 +15,8 @@ import difflib                    # Used to match near accurate words ( example 
 
 # text-to-speech engine
 engine = pyttsx3.init()
+engine = pyttsx3.init(driverName='sapi5')
+
 
 # To see the installed voices
 def list_available_voices():
@@ -51,11 +53,10 @@ def set_voice_by_name(name: str):
 
   # To replace the original voice name
     name_aliases = {
-        "zira": "zira",
         "jeera": "zira",
         "jeeera": "zira",
+        "zira": "zira",
         "david": "david",
-        "xebec": "david",
     }
     # Replace with corrected name if alias exist
     name = name_aliases.get(name, name)
