@@ -51,9 +51,11 @@ def set_voice_by_name(name: str):
 
   # To replace the original voice name
     name_aliases = {
+        "zira": "zira",
         "jeera": "zira",
         "jeeera": "zira",
-        "Xebec": "David",
+        "david": "david",
+        "xebec": "david",
     }
     # Replace with corrected name if alias exist
     name = name_aliases.get(name, name)
@@ -66,6 +68,7 @@ def set_voice_by_name(name: str):
             return
 
     say("Sorry, I couldn't find that voice.")
+    print(f"No ,matching voice for: {name}")
 
 # For creation of documents.
 def create_word_doc_from_topic(topic):
