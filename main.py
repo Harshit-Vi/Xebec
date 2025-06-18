@@ -47,13 +47,24 @@ def takeCommand():
 
 # For Voice Change
 def set_voice_by_name(name: str):
-    name = name.lower()
+    name = name.lower().strip()
+
+  # To replace the original voice name
+    name_aliases = {
+        "jeera": "zira",
+        "jeeera": "zira",
+        "Xebec": "David",
+    }
+    # Replace with corrected name if alias exist
+    name = name_aliases.get(name, name)
+
     voices=engine.getProperty('voices')
     for voice in voices:
         if name in voice.name.lower():
             engine.setProperty('voice', voice.id)
             say(f"Hi, I am {voice.name} here in your service.")
             return
+
     say("Sorry, I couldn't find that voice.")
 
 # For creation of documents.
