@@ -303,4 +303,3 @@ while True:
         break
 
 
-list_available_voices()
