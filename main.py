@@ -279,6 +279,8 @@ def run_Xebec():
                 "deepseek": "https://www.deepseek.com",
                 "canva": "https://www.canva.com",
                 "whatsapp": "https://www.whatsapp.com",
+                "discord": "https://www.discord.com",
+                
             }
 
             for site in sites:
