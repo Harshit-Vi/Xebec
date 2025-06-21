@@ -14,7 +14,6 @@ import difflib                    # Used to match near accurate words ( example 
 
 
 # text-to-speech engine
-engine = pyttsx3.init()
 engine = pyttsx3.init(driverName='sapi5')
 
 
