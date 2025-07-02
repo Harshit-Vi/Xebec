@@ -24,7 +24,16 @@ def list_available_voices():
         print(f"Name: {voice.name}, ID: {voice.id}, Gender: {voice.gender if hasattr(voice, 'gender') else 'unknown'}")
 
 # Initialize Together client (direct key or from environment)
-together_api_key = "tgp_v1_RSVq1hWYbQbyGMussZ57xgLB5yZ_ArpuaHW-TnG36Hk"
+from dotenv import load_dotenv
+load_dotenv()
+
+together_api_key = os.getenv("TOGETHER_API_KEY")
+
+if not together_api_key:
+    print("Error: TOGETHER_API_KEY is not set in the environment")
+    say("I can't start without a valid API key")
+    sys.exit(1)
+
 client = Together(api_key=together_api_key)
 
 # voice recognition , Interpretation & voice to text .
@@ -244,8 +253,16 @@ def run_Xebec():
 
 
         if any(cmd in query for cmd in ["stop", "quit", "exit", "shut down"]):
-            say("Shutting down...")
-            return "stop"
+            say("Are you sure you want to shut down?")
+            confirmation = takeCommand()
+
+            if any(word in confirmation for word in ["yes", "sure", "okay", "do it"]):
+                say("Shutting down...")
+                return "stop"
+
+            elif any(word in confirmation for word in ["no", "nope","cancel","wait"]):
+                say("shutdown cancelled. I'm still here.")
+                continue
 
         elif "play song" in query or "play music" in query:
             choose_and_play_song()
