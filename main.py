@@ -240,9 +240,10 @@ def run_Xebec():
         if not query:
             continue
 
+        query = query.lower()
 
 
-        if "stop" in query:
+        if any(cmd in query for cmd in ["stop", "quit", "exit", "shut down"]):
             say("Shutting down...")
             return "stop"
 
