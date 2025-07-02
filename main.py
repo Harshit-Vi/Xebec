@@ -16,6 +16,11 @@ import difflib                    # Used to match near accurate words ( example 
 # text-to-speech engine
 engine = pyttsx3.init(driverName='sapi5')
 
+# for api functioning and voice recognisation
+def say(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 # To see the installed voices
 def list_available_voices():
@@ -37,10 +42,6 @@ if not together_api_key:
 client = Together(api_key=together_api_key)
 
 # voice recognition , Interpretation & voice to text .
-def say(text):
-    engine.say(text)
-    engine.runAndWait()
-
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -189,7 +190,7 @@ def ask_me(prompt):
 
 def list_songs_in_downloads():
     downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
-    audio_extensions = ('.mp3', '.aac', '.ogg', '.m4a', 'wav')
+    audio_extensions = ('.mp3', '.aac', '.ogg', '.m4a', '.wav')
     songs = [f for f in os.listdir(downloads_path) if f.endswith(audio_extensions)]
     return songs, downloads_path
 
@@ -211,7 +212,7 @@ def choose_and_play_song():
     query = takeCommand().lower()
 
 #To find the fuzzy matching song
-    close_matches = difflib.get_close_matches(query, songs, n=1, cutoff=0.5)
+    close_matches = difflib.get_close_matches(query, songs, n=1, cutoff=0.7)
 
     if close_matches:
         selected_song = os.path.join(downloads_path, close_matches[0])
@@ -220,7 +221,7 @@ def choose_and_play_song():
     else:
         say("I couldn't find a matching song. Here's your list of songs. please choose a number.")
         for idx, song in enumerate(songs):
-            print(f"763{idx+1}. {song}")
+            print(f"{idx+1}. {song}")
             say(f"{idx+1}. {song}")
 
     try:
@@ -338,10 +339,11 @@ def run_Xebec():
             say(answer)
 
 # Main loop to run Xebec
-while True:
-    status = run_Xebec()
-    if status in ["stop" , "quit", "exit", "shut down"]:
-        say("Going offline...")
-        break
+if __name__ == '__main__': #to ensure main loop doesn't auto-run on import
+    while True:
+        status = run_Xebec()
+        if status in ["stop" , "quit", "exit", "shut down"]:
+            say("Going offline...")
+            break
 
 
