@@ -287,12 +287,15 @@ def run_Xebec():
                 "discord": "https://www.discord.com",
                 
             }
-
+            opened = False
             for site in sites:
                 if f"open {site}" in query:
                     say(f"Opening {site}...")
                     webbrowser.open(sites[site])
+                    opened = True
                     break
+            if not opened:
+                say("Sorry, I don't recognize that site , or it may not be in my data.")
 
 #To Start & Triger Truth and dare
         elif "truth or dare" in query:
