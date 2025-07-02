@@ -84,7 +84,6 @@ def create_word_doc_from_topic(topic):
         safe_topic = re.sub(r'[\\/*?:"<>|]', "_", topic)
         filename = f"{safe_topic.replace(' ', '_')}.docx"
 
-        filename = f"{topic.replace(' ', '_')}.docx"
         doc.save(filename)
 
         say(f"Word file created as {filename}")
@@ -314,7 +313,7 @@ def run_Xebec():
 # Main loop to run Xebec
 while True:
     status = run_Xebec()
-    if status == "stop":
+    if status in ["stop" , "quit", "exit", "shut down"]:
         say("Going offline...")
         break
 
