@@ -333,7 +333,8 @@ def run_Xebec():
             else:
                 say("Sorry, I only know the number guessing game for now.")
 
-        elif any(x in query for x in ["who is ", "has", "what is", "tell me about", "define", "ask me"]):
+# Trigger words for questioning
+        elif any(x in query for x in ["who is ", "where is","has", "what is", "tell me about", "define", "ask me"]):
             answer = ask_me(query)
             print("ChatGpt:", answer)
             say(answer)
