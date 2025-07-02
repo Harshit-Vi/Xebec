@@ -36,6 +36,7 @@ def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
+        r.pause_threshold = 1
         audio = r.listen(source)
 
         try:
@@ -44,6 +45,7 @@ def takeCommand():
             return query.lower()
         except Exception as e:
             print("Error recognizing voice:", e)
+            say("I didn't catch that. please say that again.")
             return ""
 
 # For Voice Change
@@ -209,7 +211,7 @@ def choose_and_play_song():
     else:
         say("I couldn't find a matching song. Here's your list of songs. please choose a number.")
         for idx, song in enumerate(songs):
-            print(f"f{idx+1}. {song}")
+            print(f"763{idx+1}. {song}")
             say(f"{idx+1}. {song}")
 
     try:
@@ -228,13 +230,17 @@ def choose_and_play_song():
         say("something went wrong while playing the song.")
         print("error:", e)
 
-#Initialisation of Xebec & shutting down
+#Initialisation of Xebec (core function) & shutting down
 def run_Xebec():
     say("Hello, I am Xebec")
     say("I've been awakened")
 
     while True:
         query = takeCommand()
+        if not query:
+            continue
+
+
 
         if "stop" in query:
             say("Shutting down...")
