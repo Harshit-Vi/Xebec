@@ -1,13 +1,15 @@
-import pyttsx3
+# At the top with other initializations
+global client
+client = Together(api_key=together_api_key)
 
-engine = pyttsx3.init('sapi5')
-
-def list_voices():
-    voices = engine.getProperty('voices')
-    for i, voice in enumerate(voices):
-        print(f"{i + 1}. {voice.name}")
-        engine.setProperty('voice', voice.id)
-        engine.say(f"This is {voice.name}")
-    engine.runAndWait()
-
-list_voices()
+def ask_me(prompt):
+    try:
+        response = client.chat.completions.create(  # Now recognizes client
+            model="deepseek-ai/DeepSeek-V3",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=1024,
+            temperature=0.7
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        return f"Error: {str(e)}"
