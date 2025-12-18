@@ -5,7 +5,7 @@ import pyttsx3                    # Text-to-speech conversion for voice output
 import datetime                   # Handles date and time functions
 import webbrowser                 # Allows opening web pages in a browser
 import os                         # Facilitates interaction with the operating system
-from together import Together     # Official Together SDK
+from openai import OpenAI
 import time                       # Obviously for time lol
 import random                     # For random number
 import re                         # For removing char that are illegal in a file name
@@ -32,14 +32,17 @@ def list_available_voices():
 from dotenv import load_dotenv
 load_dotenv()
 
-together_api_key = os.getenv("TOGETHER_API_KEY")
+openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
 
-if not together_api_key:
-    print("Error: TOGETHER_API_KEY is not set in the environment")
-    say("I can't start without a valid API key")
+if not openrouter_api_key:
+    print("Error: OPENROUTER_API_KEY is not set")
+    say("API key missing. I cannot start.")
     sys.exit(1)
 
-client = Together(api_key=together_api_key)
+client = OpenAI(
+    api_key=openrouter_api_key,
+    base_url="https://openrouter.ai/api/v1"
+)
 
 # voice recognition , Interpretation & voice to text .
 def takeCommand():
@@ -175,7 +178,7 @@ def play_game(players):
 def ask_me(prompt):
     try:
         response = client.chat.completions.create(
-            model="deepseek-ai/DeepSeek-V3",  # Or use any other Together-supported model
+            model="deepseek/deepseek-r1-0528",
             messages=[
                 {"role": "user", "content": prompt}
             ],
@@ -184,7 +187,8 @@ def ask_me(prompt):
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
-        return f"Together SDK error: {e}"
+        return f"OpenRouter error: {e}"
+
 
 # For music playing todo:add program to play selected music from downloads
 
@@ -193,6 +197,7 @@ def list_songs_in_downloads():
     audio_extensions = ('.mp3', '.aac', '.ogg', '.m4a', '.wav')
     songs = [f for f in os.listdir(downloads_path) if f.endswith(audio_extensions)]
     return songs, downloads_path
+
 
 def play_song(song_path):
     if sys.platform == 'win32':
