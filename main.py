@@ -14,7 +14,7 @@ import difflib                    # Used to match near accurate words ( example 
 
 
 # text-to-speech engine
-engine = pyttsx3.init(driverName='sapi5')
+engine = pyttsx3.init()
 
 # for api functioning and voice recognisation
 def say(text):
@@ -247,6 +247,11 @@ def choose_and_play_song():
 
 #Initialisation of Xebec (core function) & shutting down
 def run_Xebec():
+    print("=== SYSTEM CHECK ===")
+    print("Microphones:", sr.Microphone.list_microphone_names())
+    print("Default mic:", sr.Microphone().device_index)
+    print("TTS Voices:", [v.name for v in engine.getProperty('voices')])
+    print("[DEBUG] Starting run_Xebec")
     say("Hello, I am Xebec")
     say("I've been awakened")
 
